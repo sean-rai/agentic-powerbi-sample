@@ -1,0 +1,63 @@
+table 'Employment by Industry'
+	lineageTag: 61c0ae00-5226-4bdc-b829-d505463d302a
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: ce631ad0-b625-4463-95fb-9c442eb86d68
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Industry
+		dataType: string
+		isHidden
+		lineageTag: 5e647296-9381-41cd-8c0b-356b08690742
+		summarizeBy: none
+		sourceColumn: Industry
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employment
+		dataType: double
+		formatString: #,0
+		lineageTag: 960ec49e-a53b-4065-9a4a-2104ccd7bc1f
+		summarizeBy: sum
+		sourceColumn: Employment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Gender
+		dataType: string
+		isHidden
+		lineageTag: 0280f9e9-0fa3-4279-a00e-dfbd22e9c104
+		summarizeBy: none
+		sourceColumn: Gender
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Employment by Industry' = m
+		mode: import
+		queryGroup: Emp13
+		source =
+				let
+				    Source = Table.Combine({Women, Men})
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,80 @@
+table Industry
+	lineageTag: b4cd0bb0-9f26-4bca-94b9-992bd99f1a55
+
+	column Industry
+		dataType: string
+		lineageTag: 197f982d-d36a-4ece-980c-3353ccb6df20
+		summarizeBy: none
+		sourceColumn: Industry
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Industry","TableItemName":"Industry (groups)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column 'Industry (groups)' =
+			SWITCH(
+				TRUE,
+				ISBLANK('Industry'[Industry]),
+				"(Blank)",
+				'Industry'[Industry] IN {"Construction"},
+				"Construction",
+				'Industry'[Industry] IN {"Financial & insurance activities",
+					"Information & communication",
+					"Professional, scientific & technical activities",
+					"Real estate activities"},
+				"Knowledge Services",
+				'Industry'[Industry] IN {"Accommod-ation & food services",
+					"Administrative & support services",
+					"Other services",
+					"Transport & storage",
+					"Wholesale, retail & repair of motor vehicles"},
+				"Market Services",
+				'Industry'[Industry] IN {"Agriculture, forestry & fishing",
+					"Manufacturing",
+					"Mining, energy and water supply"},
+				"Production",
+				'Industry'[Industry] IN {"Education",
+					"Human health & social work activities",
+					"Public admin & defence; social security"},
+				"Public Sector",
+				'Industry'[Industry]
+			)
+		lineageTag: 99e54f8b-ccf9-4f16-a6c0-25fb78c7d774
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Industry"
+				          }
+				        },
+				        "Property": "Industry"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"i","Entity":"Industry"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"i"}},"Property":"Industry"}}],"GroupItems":[{"DisplayName":"(Blank)","BlankDefaultPlaceholder":true},{"DisplayName":"Construction","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"i"}},"Property":"Industry"}}],"Values":[[{"Literal":{"Value":"'Construction'"}}]]}}},{"DisplayName":"Knowledge Services","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"i"}},"Property":"Industry"}}],"Values":[[{"Literal":{"Value":"'Financial & insurance activities'"}}],[{"Literal":{"Value":"'Information & communication'"}}],[{"Literal":{"Value":"'Professional, scientific & technical activities'"}}],[{"Literal":{"Value":"'Real estate activities'"}}]]}}},{"DisplayName":"Market Services","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"i"}},"Property":"Industry"}}],"Values":[[{"Literal":{"Value":"'Accommod-ation & food services'"}}],[{"Literal":{"Value":"'Administrative & support services'"}}],[{"Literal":{"Value":"'Other services'"}}],[{"Literal":{"Value":"'Transport & storage'"}}],[{"Literal":{"Value":"'Wholesale, retail & repair of motor vehicles'"}}]]}}},{"DisplayName":"Production","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"i"}},"Property":"Industry"}}],"Values":[[{"Literal":{"Value":"'Agriculture, forestry & fishing'"}}],[{"Literal":{"Value":"'Manufacturing'"}}],[{"Literal":{"Value":"'Mining, energy and water supply'"}}]]}}},{"DisplayName":"Public Sector","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"i"}},"Property":"Industry"}}],"Values":[[{"Literal":{"Value":"'Education'"}}],[{"Literal":{"Value":"'Human health & social work activities'"}}],[{"Literal":{"Value":"'Public admin & defence; social security'"}}]]}}}]}
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Industry = m
+		mode: import
+		queryGroup: Emp13
+		source =
+				let
+				    Source = #"Employment by Industry",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Industry"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,193 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 273,
+            "y": 532
+          },
+          "nodeIndex": "Employment by Industry",
+          "nodeLineageTag": "61c0ae00-5226-4bdc-b829-d505463d302a",
+          "size": {
+            "height": 155,
+            "width": 319
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 664,
+            "y": 311
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "46a954f6-309e-470b-9f68-92a4931d3b8b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 325
+          },
+          "nodeIndex": "Gender",
+          "nodeLineageTag": "a8f92c8f-5d35-411e-8d4b-38398484d4b6",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 250.30316176206162
+          },
+          "nodeIndex": "Industry",
+          "nodeLineageTag": "b4cd0bb0-9f26-4bca-94b9-992bd99f1a55",
+          "size": {
+            "height": 147.69683823793838,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 25
+          },
+          "nodeIndex": "Key Measures",
+          "nodeLineageTag": "7e9b70d8-8665-4485-be0b-2c22618238e4",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1377.3830500146939,
+            "y": 233.15530204015539
+          },
+          "nodeIndex": "Age Group",
+          "nodeLineageTag": "ce3c114a-e5d8-4935-a590-66c39a19ffc0",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1181.2015611931854,
+            "y": 527
+          },
+          "nodeIndex": "Employment by Age Group",
+          "nodeLineageTag": "9831886b-b724-44fc-bd45-bb5dcf7ad162",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1010,
+            "y": 229.49869490219032
+          },
+          "nodeIndex": "Employment Group",
+          "nodeLineageTag": "bbd73cf0-aa19-49b4-b7a0-e34269e98f22",
+          "size": {
+            "height": 155.64171791756354,
+            "width": 234
+          },
+          "zIndex": 7
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 50.346892102823141,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 294.33333206176758,
+            "y": 0
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "158534d6-7504-41d0-9d26-b69288a6ef03",
+          "size": {
+            "height": 194,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 203
+          },
+          "nodeIndex": "Gender",
+          "nodeLineageTag": "a8f92c8f-5d35-411e-8d4b-38398484d4b6",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 601.33333206176758,
+            "y": 156
+          },
+          "nodeIndex": "Industry",
+          "nodeLineageTag": "b4cd0bb0-9f26-4bca-94b9-992bd99f1a55",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 320.58333206176758,
+            "y": 334
+          },
+          "nodeIndex": "Employment by Industry",
+          "nodeLineageTag": "61c0ae00-5226-4bdc-b829-d505463d302a",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Industry",
+      "zoomValue": 80,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

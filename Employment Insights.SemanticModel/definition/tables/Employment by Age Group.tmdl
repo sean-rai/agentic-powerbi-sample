@@ -1,0 +1,67 @@
+table 'Employment by Age Group'
+	lineageTag: 9831886b-b724-44fc-bd45-bb5dcf7ad162
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 59cb2cb2-ae64-4592-a4df-6cf06340ce52
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Age Group'
+		dataType: string
+		lineageTag: aad71db8-45e3-486c-bb0a-2849e0d5a560
+		summarizeBy: none
+		sourceColumn: Age Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Group'
+		dataType: string
+		lineageTag: d2756c9b-8539-42b5-ac6e-7a1cb4eeb95a
+		summarizeBy: none
+		sourceColumn: Employment Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Levels
+		dataType: double
+		lineageTag: 67322235-b3a7-46e3-8141-598756ff9b98
+		summarizeBy: sum
+		sourceColumn: Levels
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Employment by Age Group' = m
+		mode: import
+		queryGroup: a01
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(a01FilePath), null, true),
+				    #"1" = Source{[Name="2"]}[Data],
+				    #"Removed Top Rows" = Table.Skip(#"1",4),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Top Rows",{"Column1", "Column18", "Column20", "Column26", "Column28", "Column34", "Column36", "Column42", "Column44", "Column50", "Column52", "Column58", "Column60"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Other Columns", [PromoteAllScalars=true]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"Aged 16-17", "16-17 Employed"}, {"Column3", "16-17 Unemployed"}, {"Aged 18-24", "18-24 Employed"}, {"Column5", "18-24 Unemployed"}, {"Aged 25-34", "25-34 Employed"}, {"Column7", "25-34 Unemployed"}, {"Aged 35-49", "35-49 Employed"}, {"Column9", "35-49 Unemployed"}, {"Aged 50-64", "50-64 Employed"}, {"Column11", "50-64 Unemployed"}, {"Age 65+", "65+ Employed"}, {"Column13", "65+ Unemployed"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each ([Column1] <> null)),
+				    #"Removed Top Rows1" = Table.Skip(#"Filtered Rows",1),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows1",7),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Removed Bottom Rows", "Column1", Splitter.SplitTextByEachDelimiter({"-"}, QuoteStyle.Csv, false), {"Column1.1", "Date"}),
+				    #"Extracted First Characters" = Table.TransformColumns(#"Split Column by Delimiter", {{"Date", each Text.Start(_, 8), type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Extracted First Characters",{"Column1.1"}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Removed Columns", {"Date"}, "Attribute", "Levels"),
+				    #"Split Column by Delimiter1" = Table.SplitColumn(#"Unpivoted Other Columns", "Attribute", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"Age Group", "Employment Group"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter1",{{"Date", type date}, {"Age Group", type text}, {"Employment Group", type text}, {"Levels", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

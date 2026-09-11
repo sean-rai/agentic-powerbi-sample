@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "3911217375ca867bcd38",
+  "displayName": "Industry Analysis",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e102d1d2e8c82c273427",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Industry"
+              }
+            },
+            "Property": "Industry"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "9a0ea3b5a51742e1d106",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "0fe0efbe40bb9a67d9d4",
+        "boundFilter": "e102d1d2e8c82c273427",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Industry"
+              }
+            },
+            "Property": "Industry"
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "fad778eabaa2e9980889",
+      "target": "4ef5ac34ea7d0402f14d",
+      "type": "DataFilter"
+    },
+    {
+      "source": "3f561e47ae0fddce39f1",
+      "target": "4ef5ac34ea7d0402f14d",
+      "type": "HighlightFilter"
+    }
+  ]
+}

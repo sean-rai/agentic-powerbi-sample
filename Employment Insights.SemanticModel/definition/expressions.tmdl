@@ -1,0 +1,64 @@
+expression Emp13FilePath = "C:\Users\MeganLivadas\Downloads\emp13may2026.xls" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 1505aea2-ac35-470e-bcbd-2b6da5eb56ff
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression Men =
+		let
+		    Source = Excel.Workbook(File.Contents(Emp13FilePath), null, true),
+		    Men1 = Source{[Name="Men"]}[Data],
+		    #"Removed Top Rows" = Table.Skip(Men1,5),
+		    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows",11),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Bottom Rows", [PromoteAllScalars=true]),
+		    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([Column1] <> null and [Column1] <> "Apr-Jun 1995" and [Column1] <> "Apr-Jun 1996" and [Column1] <> "Jan-Mar 1995" and [Column1] <> "Jan-Mar 1996" and [Column1] <> "Jul-Sep 1995" and [Column1] <> "Jul-Sep 1996" and [Column1] <> "Oct-Dec 1995" and [Column1] <> "Oct-Dec 1996")),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"All in employment2", "Public sector3", "Private sector", "Column21"}),
+		    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Removed Columns", {"Column1"}, "Industry", "Employment"),
+		    #"Split Column by Delimiter" = Table.SplitColumn(#"Unpivoted Other Columns", "Column1", Splitter.SplitTextByEachDelimiter({"-"}, QuoteStyle.Csv, false), {"Column1.1", "Date"}),
+		    #"Extracted First Characters" = Table.TransformColumns(#"Split Column by Delimiter", {{"Date", each Text.Start(_, 8), type text}}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Extracted First Characters",{"Column1.1"}),
+		    #"Added Custom" = Table.AddColumn(#"Removed Columns1", "Gender", each "Men"),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}, {"Industry", type text}, {"Employment", Int64.Type}, {"Gender", type text}}),
+		    #"Multiplied Column" = Table.TransformColumns(#"Changed Type", {{"Employment", each _ * 1000, type number}})
+		in
+		    #"Multiplied Column"
+	lineageTag: 1393a1fc-9612-4ee5-b9e3-4a232033b70b
+	queryGroup: Emp13
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Women =
+		let
+		    Source = Excel.Workbook(File.Contents(Emp13FilePath), null, true),
+		    Women1 = Source{[Name="Women"]}[Data],
+		    #"Removed Top Rows" = Table.Skip(Women1,5),
+		    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows",11),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Bottom Rows", [PromoteAllScalars=true]),
+		    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([Column1] <> null and [Column1] <> "Apr-Jun 1995" and [Column1] <> "Apr-Jun 1996" and [Column1] <> "Jan-Mar 1995" and [Column1] <> "Jan-Mar 1996" and [Column1] <> "Jul-Sep 1995" and [Column1] <> "Jul-Sep 1996" and [Column1] <> "Oct-Dec 1995" and [Column1] <> "Oct-Dec 1996")),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"All in employment2", "Public sector3", "Private sector", "Column21"}),
+		    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Removed Columns", {"Column1"}, "Industry", "Employment"),
+		    #"Split Column by Delimiter" = Table.SplitColumn(#"Unpivoted Other Columns", "Column1", Splitter.SplitTextByEachDelimiter({"-"}, QuoteStyle.Csv, false), {"Column1.1", "Date"}),
+		    #"Extracted First Characters" = Table.TransformColumns(#"Split Column by Delimiter", {{"Date", each Text.Start(_, 8), type text}}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Extracted First Characters",{"Column1.1"}),
+		    #"Added Custom" = Table.AddColumn(#"Removed Columns1", "Gender", each "Women"),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}, {"Industry", type text}, {"Employment", Int64.Type}, {"Gender", type text}}),
+		    #"Multiplied Column" = Table.TransformColumns(#"Changed Type", {{"Employment", each _ * 1000, type number}})
+		in
+		    #"Multiplied Column"
+	lineageTag: 46b622a6-2a7c-4c7f-9b0b-d3cf3180f915
+	queryGroup: Emp13
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression a01FilePath = "C:\Users\MeganLivadas\Downloads\a01jul2026.xls" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: f8aa1f8b-f025-40ef-96cf-f1f48399c45b
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

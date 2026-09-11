@@ -1,0 +1,26 @@
+table 'Employment Group'
+	lineageTag: bbd73cf0-aa19-49b4-b7a0-e34269e98f22
+
+	column 'Employment Group'
+		dataType: string
+		lineageTag: b6b5bd90-efee-4a34-8edf-ce307f08521d
+		summarizeBy: none
+		sourceColumn: Employment Group
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Employment Group' = m
+		mode: import
+		queryGroup: a01
+		source =
+				let
+				    Source = #"Employment by Age Group",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Employment Group"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

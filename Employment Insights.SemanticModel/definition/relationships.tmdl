@@ -1,0 +1,29 @@
+relationship AutoDetected_f145d338-aaee-4a49-a111-b001dd4a4365
+	fromColumn: 'Employment by Industry'.Industry
+	toColumn: Industry.Industry
+
+relationship AutoDetected_67c064c8-4b09-4e26-88f2-5c4080a30c56
+	fromColumn: 'Employment by Industry'.Gender
+	toColumn: Gender.Gender
+
+relationship AutoDetected_d8ab51ba-de37-40d9-af83-70206b4c8645
+	fromColumn: 'Employment by Age Group'.'Age Group'
+	toColumn: 'Age Group'.'Age Group'
+
+relationship AutoDetected_d3b8cd7b-a5f2-4272-8a26-96ffa44d77a2
+	fromColumn: 'Employment by Age Group'.'Employment Group'
+	toColumn: 'Employment Group'.'Employment Group'
+
+relationship e3348de1-635d-4384-9c25-d5a626b2830e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Date.Date
+	toColumn: LocalDateTable_3c8a6d9c-b734-4ce1-bae2-3e3139e9afc9.Date
+
+relationship b3448403-6282-e8e5-b430-d1659be0583a
+	fromColumn: 'Employment by Industry'.Date
+	toColumn: Date.Date
+
+relationship b37187bc-8ad3-82ae-675f-a0b67ad040a6
+	fromColumn: 'Employment by Age Group'.Date
+	toColumn: Date.Date
+

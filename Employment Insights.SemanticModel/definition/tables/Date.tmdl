@@ -1,0 +1,69 @@
+table Date
+	lineageTag: 158534d6-7504-41d0-9d26-b69288a6ef03
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 237b3644-6d80-4010-a0ca-decd23d56cc2
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: e3348de1-635d-4384-9c25-d5a626b2830e
+			defaultHierarchy: LocalDateTable_3c8a6d9c-b734-4ce1-bae2-3e3139e9afc9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 4f55f99b-28e5-459c-90e3-a71fb911526d
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ad13e16-2bea-4375-b6ef-1416a0a2cbd8
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = User
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 09c1a4bc-5c71-4db6-a4c2-bf541eec803e
+
+		level Year
+			lineageTag: 085c8420-2a3d-47eb-8ae3-fe65fa2d97ce
+			column: Year
+
+		level Quarter
+			lineageTag: d149f24c-9802-43c9-b442-a194b1cb7657
+			column: Quarter
+
+		level Date
+			lineageTag: e0f15ef8-2a36-407b-82b0-a3219af98845
+			column: Date
+
+	partition Date = m
+		mode: import
+		queryGroup: a01
+		source =
+				let
+				    Source = #"Employment by Age Group",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Date"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    AddYear = Table.AddColumn(#"Removed Duplicates", "Year", each Date.Year([Date]), Int64.Type),
+				    AddQuarter = Table.AddColumn(AddYear, "Quarter", each Date.QuarterOfYear([Date]), Int64.Type)
+				in
+				    AddQuarter
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

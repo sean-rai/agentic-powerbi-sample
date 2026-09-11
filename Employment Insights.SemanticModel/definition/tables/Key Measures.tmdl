@@ -1,0 +1,45 @@
+table 'Key Measures'
+	lineageTag: 7e9b70d8-8665-4485-be0b-2c22618238e4
+
+	measure 'Industry Employment' = SUM('Employment by Industry'[Employment])
+		formatString: 0
+		lineageTag: 85489a8f-c1ee-42af-b31e-c8351f030355
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Age Group Employment' = SUM('Employment by Age Group'[Levels])
+		formatString: #,0
+		lineageTag: acc86edc-6ba5-4aaf-9d7e-85337af952c2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average Industry Employment' =
+			
+			AVERAGEX(
+			    VALUES('Date'[Date]),
+			    CALCULATE(SUM('Employment by Industry'[Employment])))
+		lineageTag: aa485aef-b94f-48d7-9866-27b5e5c81724
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Age Group Employment' =
+			
+			AVERAGEX(
+			    VALUES('Date'[Date]),
+			    CALCULATE(SUM('Employment by Age Group'[Levels])))
+		lineageTag: 39314b4e-b358-42ee-ab98-51bf3bed09a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Key Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

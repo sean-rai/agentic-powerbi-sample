@@ -1,0 +1,26 @@
+table Gender
+	lineageTag: a8f92c8f-5d35-411e-8d4b-38398484d4b6
+
+	column Gender
+		dataType: string
+		lineageTag: 5b54fb5f-322d-44b3-9267-b77b4b2ab0a8
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Gender = m
+		mode: import
+		queryGroup: Emp13
+		source =
+				let
+				    Source = #"Employment by Industry",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Gender"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
